@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -77,6 +79,13 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
+	{ 0, XF86XK_AudioMute,          	   spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
+        { 0, XF86XK_AudioRaiseVolume,   	   spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +10%; kill -44 $(pidof dwmblocks)") },
+        { 0, XF86XK_AudioLowerVolume,   	   spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -10%; kill -44 $(pidof dwmblocks)") },
+        { 0, XF86XK_MonBrightnessUp,       	   spawn,          SHCMD("light -A 5") },
+        { 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("light -U 5") },
+        { 0,                            XK_Print,  spawn,          SHCMD("maim ~/Pictures/SS-$(date '+%y%m%d-%H%M-%S').png") },
+	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("prompt 'Are you sure you want to shutdown' 'poweroff'") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
